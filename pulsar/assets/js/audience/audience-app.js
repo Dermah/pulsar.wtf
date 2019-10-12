@@ -17,6 +17,9 @@ import "phoenix_html";
 import { channel } from "./socket";
 
 import p5 from "p5";
+import NoSleep from "nosleep.js";
+
+const noSleep = new NoSleep();
 
 console.log(p5);
 
@@ -33,7 +36,11 @@ new p5(p => {
   p.preload = () => {};
 
   p.setup = () => {
-    p.createCanvas(p.windowWidth, p.windowHeight);
+    const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
+
+    canvas.mouseClicked(function() {
+      noSleep.enable();
+    });
   };
 
   p.draw = () => {
