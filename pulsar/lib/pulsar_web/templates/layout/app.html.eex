@@ -12,7 +12,7 @@
     <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
     <%= render @view_module, @view_template, assigns %>
-    <%= static_js_for_view(@view_module)%>
+    <%# <%= static_js_for_view(@view_module)%>
     <script type="text/javascript" src="<%= Routes.static_path(@conn, static_js_for_view(@view_module)) %>"></script>
   </body>
 </html>

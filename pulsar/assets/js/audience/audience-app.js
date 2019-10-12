@@ -15,3 +15,20 @@ import "phoenix_html";
 //
 // Local files can be imported directly using relative paths, for example:
 import socket from "./socket";
+
+import p5 from "p5";
+console.log(p5);
+
+new p5(p => {
+  p.setup = () => {
+    p.createCanvas(window.innerWidth, window.innerHeight);
+  };
+
+  p.draw = () => {
+    p.background(0);
+  };
+
+  p.windowResized = () => {
+    p.resizeCanvas(window.innerWidth, window.innerHeight);
+  };
+});
