@@ -17,6 +17,8 @@ defmodule PulsarWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+
+    get "/clicker", ClickerController, :index
   end
 
   # Other scopes may use custom stacks.
