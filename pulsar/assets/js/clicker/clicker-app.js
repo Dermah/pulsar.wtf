@@ -35,6 +35,7 @@ new p5(function(p) {
 
   p.setup = function() {
     canvas = p.createCanvas(300, 300);
+    p.frameRate(24);
 
     var myDiv = p
       .createDiv("click to start")
@@ -53,11 +54,12 @@ new p5(function(p) {
     });
 
     canvas.mouseClicked(function() {
-      if (!amp) amp = new p5.Amplitude();
       if (tune.isPlaying()) {
         tune.stop();
+        amp = undefined;
       } else {
         tune.play();
+        amp = new p5.Amplitude();
       }
     });
   };
