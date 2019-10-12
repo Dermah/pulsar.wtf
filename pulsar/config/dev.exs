@@ -52,7 +52,10 @@ config :pulsar, PulsarWeb.Endpoint,
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
       ~r"lib/pulsar_web/{live,views}/.*(ex)$",
-      ~r"lib/pulsar_web/templates/.*(eex)$"
+      ~r"lib/pulsar_web/templates/.*(eex)$",
+      # Some server reload watching
+      ~r"lib/pulsar_web/channels/.*(ex)$",
+      ~r"lib/pulsar_web/controllers/.*(ex)$"
     ]
   ]
 
