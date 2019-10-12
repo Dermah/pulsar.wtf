@@ -71,3 +71,4 @@ channel
   });
 
 export default socket;
+export { channel };
