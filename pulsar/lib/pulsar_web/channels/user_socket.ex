@@ -2,7 +2,7 @@ defmodule PulsarWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", PulsarWeb.RoomChannel
+  channel("audience:*", PulsarWeb.AudienceChannel)
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
