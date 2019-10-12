@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Pulsar · Phoenix Framework</title>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, static_css_for_view(@view_module)) %>"/>
+    <link rel="manifest" href="<%= Routes.static_path(@conn, "/manifest.json") %>">
+    <!-- Chrome -->
+    <meta name="theme-color" content="#222" />
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
   </head>
   <body>
     <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
