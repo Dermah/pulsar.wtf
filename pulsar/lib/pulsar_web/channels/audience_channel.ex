@@ -8,4 +8,9 @@ defmodule PulsarWeb.AudienceChannel do
   def join("audience:" <> _private_room_id, _params, _socket) do
     {:error, %{reason: "unauthorized"}}
   end
+
+  def handle_in("click", _params, socket) do
+    broadcast!(socket, "pulse", %{})
+    {:noreply, socket}
+  end
 end

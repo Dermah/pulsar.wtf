@@ -57,8 +57,11 @@ socket.connect();
 // Now that you are connected, you can join channels with a topic:
 let channel = socket.channel("audience:lobby", {});
 
-channel.on("pulse", payload => {
-  console.log(payload);
+const clickerButton = document.querySelector("#clicker");
+
+clickerButton.addEventListener("click", e => {
+  console.log(e);
+  channel.push("click", {});
 });
 
 channel
