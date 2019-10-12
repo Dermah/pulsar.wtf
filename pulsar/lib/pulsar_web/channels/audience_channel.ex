@@ -9,8 +9,8 @@ defmodule PulsarWeb.AudienceChannel do
     {:error, %{reason: "unauthorized"}}
   end
 
-  def handle_in("click", _params, socket) do
-    broadcast!(socket, "pulse", %{})
+  def handle_in("click", params, socket) do
+    broadcast!(socket, "pulse", params)
     {:noreply, socket}
   end
 end

@@ -17,16 +17,20 @@ import "phoenix_html";
 import { channel } from "./socket";
 
 import p5 from "p5";
+
 console.log(p5);
 
 new p5(p => {
   const widthPc = widthPercent => (p.width * widthPercent) / 100;
 
+  let tune;
   let pulseSize = 0;
 
-  channel.on("pulse", () => {
-    pulseSize = widthPc(100);
+  channel.on("pulse", ({ size }) => {
+    pulseSize = widthPc(size * 100);
   });
+
+  p.preload = () => {};
 
   p.setup = () => {
     p.createCanvas(p.windowWidth, p.windowHeight);
