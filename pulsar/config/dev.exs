@@ -55,7 +55,8 @@ config :pulsar, PulsarWeb.Endpoint,
       ~r"lib/pulsar_web/templates/.*(eex)$",
       # Some server reload watching
       ~r"lib/pulsar_web/channels/.*(ex)$",
-      ~r"lib/pulsar_web/controllers/.*(ex)$"
+      ~r"lib/pulsar_web/controllers/.*(ex)$",
+      ~r"lib/pulsar_web/views/.*(ex)$",
     ]
   ]
 
