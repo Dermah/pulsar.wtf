@@ -2,6 +2,10 @@
 <div class="controls">
   <button id="clear-button">Clear</button>
   <div>
+    <button id="left-button">◀️</button>
+    <button id="right-button">▶️</button>
+  </div>
+  <div>
     <input id="broadcasting" type="checkbox" checked="true" />
     <label for="broadcasting">Broadcast</label>
   </div>

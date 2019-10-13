@@ -56,9 +56,12 @@ socket.connect();
 
 // Now that you are connected, you can join channels with a topic:
 let channel = socket.channel("audience:lobby", {});
+let slideChannel = socket.channel("slides:lobby", {});
 let broadcasting = true;
 
 const clearButton = document.querySelector("#clear-button");
+const leftButton = document.querySelector("#left-button");
+const rightButton = document.querySelector("#right-button");
 
 var broadcastCheckbox = document.querySelector("#broadcasting");
 
@@ -70,10 +73,27 @@ clearButton.addEventListener("click", e => {
   channel.push("clear", {});
 });
 
+leftButton.addEventListener("click", e => {
+  slideChannel.push("slides", { action: "left" });
+});
+
+rightButton.addEventListener("click", e => {
+  slideChannel.push("slides", { action: "right" });
+});
+
 channel
   .join()
   .receive("ok", resp => {
-    console.log("Joined successfully", resp);
+    console.log("Joined audience successfully", resp);
+  })
+  .receive("error", resp => {
+    console.log("Unable to join", resp);
+  });
+
+slideChannel
+  .join()
+  .receive("ok", resp => {
+    console.log("Joined slides successfully", resp);
   })
   .receive("error", resp => {
     console.log("Unable to join", resp);

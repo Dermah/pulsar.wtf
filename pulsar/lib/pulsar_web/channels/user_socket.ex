@@ -3,6 +3,7 @@ defmodule PulsarWeb.UserSocket do
 
   ## Channels
   channel("audience:*", PulsarWeb.AudienceChannel)
+  channel("slides:*", PulsarWeb.AudienceChannel)
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
