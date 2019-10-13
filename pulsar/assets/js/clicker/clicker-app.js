@@ -168,14 +168,6 @@ new p5(function(p) {
       10
     );
 
-    // if (amp) {
-    //   energy.bass.push(fft.getEnergy("bass"));
-    //   energy.lowMid.push(fft.getEnergy("lowMid"));
-    //   energy.mid.push(fft.getEnergy("mid"));
-    //   energy.highMid.push(fft.getEnergy("highMid"));
-    //   energy.treble.push(fft.getEnergy("treble"));
-    // }
-
     // Waveform
     var waveform = fft.waveform();
     p.noFill();
