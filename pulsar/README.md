@@ -18,6 +18,10 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 - Mailing list: http://groups.google.com/group/phoenix-talk
 - Source: https://github.com/phoenixframework/phoenix
 
+## BYO Files
+
+- Add your own filemusic at `assets/static/music.mp3`
+
 ## Deployment
 
 ### Environment Variables
