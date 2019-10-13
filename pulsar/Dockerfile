@@ -19,5 +19,7 @@ RUN cd assets && npm install
 
 RUN ./build.sh
 
+FROM elixir:1.9.1-alpine
 EXPOSE 4000
-CMD _build/prod/rel/pulsar/bin/pulsar start
+COPY --from=0 /_build/prod/rel/pulsar /pulsar
+CMD /pulsar/bin/pulsar start
