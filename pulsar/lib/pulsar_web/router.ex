@@ -19,6 +19,8 @@ defmodule PulsarWeb.Router do
     get "/", PageController, :index
 
     get "/clicker", ClickerController, :index
+
+    get "/slides", SlidesController, :index
   end
 
   # Other scopes may use custom stacks.

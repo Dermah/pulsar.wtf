@@ -19,7 +19,8 @@ module.exports = (env, options) => ({
       .concat(["./js/clicker/clicker-app.js"]),
     "audience-app": glob
       .sync("./vendor/**/*.js")
-      .concat(["./js/audience/audience-app.js"])
+      .concat(["./js/audience/audience-app.js"]),
+    slides: glob.sync("./vendor/**/*.js").concat(["./js/slides/slides.js"])
   },
   output: {
     filename: "js/[name].js",
@@ -37,6 +38,18 @@ module.exports = (env, options) => ({
       {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, "css-loader"]
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[name].[ext]",
+              outputPath: "fonts/"
+            }
+          }
+        ]
       }
     ]
   },

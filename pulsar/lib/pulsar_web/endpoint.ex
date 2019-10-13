@@ -14,7 +14,7 @@ defmodule PulsarWeb.Endpoint do
     from: :pulsar,
     gzip: false,
     only: ~w(css fonts images js favicon.ico robots.txt manifest.json),
-    only_matching: ~w(sounds)
+    only_matching: ~w(sounds css)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
