@@ -8,7 +8,7 @@ MIX_ENV=prod mix compile
 npm run deploy --prefix ./assets
 mix phx.digest
 
-MIX_ENV=prod mix release
+MIX_ENV=prod mix release --overwrite
 
 # Without mix release:
 # echo "  Done. To run:"
