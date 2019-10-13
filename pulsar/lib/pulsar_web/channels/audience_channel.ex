@@ -13,4 +13,9 @@ defmodule PulsarWeb.AudienceChannel do
     broadcast!(socket, "pulse", params)
     {:noreply, socket}
   end
+
+   def handle_in("pulse", params, socket) do
+    broadcast!(socket, "pulse", params)
+    {:noreply, socket}
+  end
 end

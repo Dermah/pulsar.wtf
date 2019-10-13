@@ -57,9 +57,9 @@ socket.connect();
 // Now that you are connected, you can join channels with a topic:
 let channel = socket.channel("audience:lobby", {});
 
-channel.on("pulse", payload => {
-  console.log(payload);
-});
+// channel.on("pulse", payload => {
+// console.log(payload);
+// });
 
 channel
   .join()

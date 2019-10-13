@@ -29,15 +29,19 @@ new p5(function(p) {
   let amp;
   let fft;
   let peakDetect;
+  let energy;
+
+  // let energy = { bass: [], lowMid: [], mid: [], highMid: [], treble: [] };
 
   p.preload = function() {
     p.soundFormats("mp3");
     tune = p.loadSound("/music.mp3");
+    energy = p.loadJSON("/ttwaveform.json");
   };
 
   p.setup = function() {
     canvas = p.createCanvas(p.windowWidth, 300);
-    p.frameRate(60);
+    p.frameRate(15);
 
     var myDiv = p
       .createDiv("click to start")
@@ -67,6 +71,10 @@ new p5(function(p) {
 
     fft = new p5.FFT();
     peakDetect = new p5.PeakDetect();
+
+    // tune.onended(() => {
+    //   console.log(JSON.stringify(energy));
+    // });
   };
 
   p.draw = function() {
@@ -82,6 +90,16 @@ new p5(function(p) {
     peakDetect.update(fft);
 
     peakDetect.isDetected && channel.push("click", { size: amp.getLevel() });
+    tune.isPlaying() &&
+      channel.push("pulse", {
+        type: "waveform",
+        energy: Object.keys(energy).map(key =>
+          energy[key].slice(
+            Math.abs(Math.floor(tune.currentTime() * 15) - 20),
+            Math.floor(tune.currentTime() * 15) + 20
+          )
+        )
+      });
 
     p.push();
     p.translate(-p.width / 2, -p.height / 2);
@@ -127,6 +145,14 @@ new p5(function(p) {
       ((fft.getEnergy("treble") / 255) * p.width) / 5,
       10
     );
+
+    // if (amp) {
+    //   energy.bass.push(fft.getEnergy("bass"));
+    //   energy.lowMid.push(fft.getEnergy("lowMid"));
+    //   energy.mid.push(fft.getEnergy("mid"));
+    //   energy.highMid.push(fft.getEnergy("highMid"));
+    //   energy.treble.push(fft.getEnergy("treble"));
+    // }
 
     // Waveform
     var waveform = fft.waveform();
