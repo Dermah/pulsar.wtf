@@ -34,9 +34,10 @@ new p5(function(p) {
   // let energy = { bass: [], lowMid: [], mid: [], highMid: [], treble: [] };
 
   p.preload = function() {
+    const SONG = "/sounds/jp-intro.mp3";
     p.soundFormats("mp3");
-    previewTune = p.loadSound("/music.mp3");
-    tune = p.loadSound("/music.mp3");
+    previewTune = p.loadSound(SONG);
+    tune = p.loadSound(SONG);
     // energy = p.loadJSON("/ttwaveform.json");
   };
 

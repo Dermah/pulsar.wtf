@@ -1,5 +1,5 @@
 # BYO Music
-assets/static/*.mp3
+assets/static/sounds/*.mp3
 
 # The directory Mix will write compiled artifacts to.
 /_build/
