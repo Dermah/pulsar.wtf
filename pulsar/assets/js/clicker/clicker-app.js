@@ -25,11 +25,9 @@ console.log(p5);
 new p5(function(p) {
   let previewTune;
   let tune;
-  let pulseSize;
   let canvas;
   let amp;
   let fft;
-  let peakDetect;
 
   // let energy;
   let energy = [[], [], [], [], []];
@@ -76,7 +74,6 @@ new p5(function(p) {
     amp = new p5.Amplitude();
     fft.setInput(previewTune);
     // amp.setInput(previewTune);
-    peakDetect = new p5.PeakDetect();
     previewTune.disconnect();
 
     // tune.onended(() => {
@@ -96,25 +93,21 @@ new p5(function(p) {
 
     p.circle(0, 0, amp ? amp.getLevel() * p.width : 0);
 
-    // peakDetect accepts an fft post-analysis
     const spectrum = fft.analyze();
-    peakDetect.update(fft);
 
-    peakDetect.isDetected && channel.push("click", { size: amp.getLevel() });
-
-    energy[0].push(fft.getEnergy("bass"));
+    energy[0].push(fft.getEnergy(1, 40));
     energy[0].length > 30 && energy[0].splice(0, 1);
 
-    energy[1].push(fft.getEnergy("lowMid"));
+    energy[1].push(fft.getEnergy(40, 200));
     energy[1].length > 30 && energy[1].splice(0, 1);
 
-    energy[2].push(fft.getEnergy("mid"));
+    energy[2].push(fft.getEnergy(200, 1000));
     energy[2].length > 30 && energy[2].splice(0, 1);
 
-    energy[3].push(fft.getEnergy("highMid"));
+    energy[3].push(fft.getEnergy(1000, 3000));
     energy[3].length > 30 && energy[3].splice(0, 1);
 
-    energy[4].push(fft.getEnergy("treble"));
+    energy[4].push(fft.getEnergy(3000, 14000));
     energy[4].length > 30 && energy[4].splice(0, 1);
 
     tune.isPlaying() &&

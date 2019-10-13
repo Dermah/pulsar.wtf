@@ -51,7 +51,7 @@ new p5(p => {
     p.push();
     p.translate(p.width / 2, p.height / 2);
 
-    p.background(0);
+    p.background(0, 0, totalAmp * 255 || 0);
 
     if (pulseSize > 0) {
       p.circle(0, 0, pulseSize);
@@ -64,8 +64,7 @@ new p5(p => {
     energyData.map((freqEnergy, i) => {
       p.fill(250);
       freqEnergy.map((amp, j) => {
-        j / freqEnergy.length > 0.5 && p.fill(25);
-        p.stroke(totalAmp * 255);
+        j / freqEnergy.length > 0.5 && p.fill(25) && p.stroke(255);
         p.rect(
           (j * widthPc(100)) / freqEnergy.length +
             (1 * widthPc(100)) / (2 * freqEnergy.length),
