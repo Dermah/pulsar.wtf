@@ -21,6 +21,18 @@ import NoSleep from "nosleep.js";
 
 const noSleep = new NoSleep();
 
+function getQueryVariable(variable) {
+  var query = window.location.search.substring(1);
+  var vars = query.split("&");
+  for (var i = 0; i < vars.length; i++) {
+    var pair = vars[i].split("=");
+    if (pair[0] == variable) {
+      return pair[1];
+    }
+  }
+  return false;
+}
+
 new p5(p => {
   const widthPc = widthPercent => (p.width * widthPercent) / 100;
   const heightPc = heightPercent => (p.height * heightPercent) / 100;
@@ -42,7 +54,9 @@ new p5(p => {
   p.preload = () => {};
 
   p.setup = () => {
-    instrument = Math.floor(Math.random() * 5);
+    instrument =
+      Number.parseInt(getQueryVariable("instrument"), 10) ||
+      Math.floor(Math.random() * 5);
     const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
 
     canvas.mouseClicked(function() {
@@ -51,7 +65,17 @@ new p5(p => {
   };
 
   p.draw = () => {
-    p.background(0, 0, totalAmp * 255 || 0);
+    p.background(
+      (instrument % 3 === 0 &&
+        totalAmp * (energyData[0] && energyData[0][15])) ||
+        0,
+      (instrument % 3 === 1 &&
+        totalAmp * (energyData[1] && energyData[1][15])) ||
+        0,
+      (instrument % 3 === 2 &&
+        totalAmp * (energyData[2] && energyData[2][15])) ||
+        0
+    );
 
     p.textAlign(p.CENTER);
     p.fill(255);
@@ -82,7 +106,7 @@ new p5(p => {
         // 10,
         // 10
         widthPc(100) / freqEnergy.length,
-        (heightPc(100 / channels) * amp) / 255
+        (heightPc(50 / channels) * amp) / 255
       );
     });
     // });

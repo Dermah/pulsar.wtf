@@ -20,7 +20,20 @@ import p5 from "p5";
 import "p5/lib/addons/p5.sound";
 import "p5/lib/addons/p5.dom";
 
-console.log(p5);
+function getQueryVariable(variable) {
+  var query = window.location.search.substring(1);
+  var vars = query.split("&");
+  for (var i = 0; i < vars.length; i++) {
+    var pair = vars[i].split("=");
+    if (pair[0] == variable) {
+      return pair[1];
+    }
+  }
+  return false;
+}
+
+const SONG = `/sounds/${getQueryVariable("song") || "jp-intro"}.mp3`;
+const SMOOTHING = getQueryVariable("smoothing") || 0.8;
 
 new p5(function(p) {
   let previewTune;
@@ -34,11 +47,9 @@ new p5(function(p) {
   // let energy = { bass: [], lowMid: [], mid: [], highMid: [], treble: [] };
 
   p.preload = function() {
-    const SONG = "/sounds/jp-intro.mp3";
     p.soundFormats("mp3");
     previewTune = p.loadSound(SONG);
     tune = p.loadSound(SONG);
-    // energy = p.loadJSON("/ttwaveform.json");
   };
 
   p.setup = function() {
@@ -65,13 +76,12 @@ new p5(function(p) {
       if (previewTune.isPlaying()) {
         previewTune.stop();
         tune.stop();
-        amp = undefined;
       } else {
         previewTune.play();
       }
     });
 
-    fft = new p5.FFT();
+    fft = new p5.FFT(SMOOTHING);
     amp = new p5.Amplitude();
     fft.setInput(previewTune);
     // amp.setInput(previewTune);
