@@ -27,10 +27,12 @@ new p5(p => {
 
   let pulseSize = 0;
   let energyData = [];
+  let totalAmp;
 
-  channel.on("pulse", ({ type, size, energy }) => {
+  channel.on("pulse", ({ type, size, energy, amplitude }) => {
     if (type === "waveform") {
       energyData = energy;
+      totalAmp = amplitude;
     }
     pulseSize = widthPc(size * 100);
   });
@@ -61,9 +63,9 @@ new p5(p => {
     p.translate(-p.width / 2, -p.height / 2);
     energyData.map((freqEnergy, i) => {
       p.fill(250);
-      p.stroke(0);
       freqEnergy.map((amp, j) => {
-        j / freqEnergy.length > 0.5 && p.fill(25) && p.stroke(255);
+        j / freqEnergy.length > 0.5 && p.fill(25);
+        p.stroke(totalAmp * 255);
         p.rect(
           (j * widthPc(100)) / freqEnergy.length +
             (1 * widthPc(100)) / (2 * freqEnergy.length),

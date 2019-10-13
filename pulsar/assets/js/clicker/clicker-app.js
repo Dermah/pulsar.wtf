@@ -23,20 +23,23 @@ import "p5/lib/addons/p5.dom";
 console.log(p5);
 
 new p5(function(p) {
+  let previewTune;
   let tune;
   let pulseSize;
   let canvas;
   let amp;
   let fft;
   let peakDetect;
-  let energy;
 
+  // let energy;
+  let energy = [[], [], [], [], []];
   // let energy = { bass: [], lowMid: [], mid: [], highMid: [], treble: [] };
 
   p.preload = function() {
     p.soundFormats("mp3");
+    previewTune = p.loadSound("/music.mp3");
     tune = p.loadSound("/music.mp3");
-    energy = p.loadJSON("/ttwaveform.json");
+    // energy = p.loadJSON("/ttwaveform.json");
   };
 
   p.setup = function() {
@@ -60,17 +63,21 @@ new p5(function(p) {
     });
 
     canvas.mouseClicked(function() {
-      if (tune.isPlaying()) {
+      if (previewTune.isPlaying()) {
+        previewTune.stop();
         tune.stop();
         amp = undefined;
       } else {
-        tune.play();
-        amp = new p5.Amplitude();
+        previewTune.play();
       }
     });
 
     fft = new p5.FFT();
+    amp = new p5.Amplitude();
+    fft.setInput(previewTune);
+    // amp.setInput(previewTune);
     peakDetect = new p5.PeakDetect();
+    previewTune.disconnect();
 
     // tune.onended(() => {
     //   console.log(JSON.stringify(energy));
@@ -78,6 +85,10 @@ new p5(function(p) {
   };
 
   p.draw = function() {
+    if (!tune.isPlaying() && previewTune.currentTime() > 1) {
+      tune.play();
+    }
+
     p.push();
     p.translate(p.width / 2, p.height / 2);
 
@@ -90,15 +101,33 @@ new p5(function(p) {
     peakDetect.update(fft);
 
     peakDetect.isDetected && channel.push("click", { size: amp.getLevel() });
+
+    energy[0].push(fft.getEnergy("bass"));
+    energy[0].length > 30 && energy[0].splice(0, 1);
+
+    energy[1].push(fft.getEnergy("lowMid"));
+    energy[1].length > 30 && energy[1].splice(0, 1);
+
+    energy[2].push(fft.getEnergy("mid"));
+    energy[2].length > 30 && energy[2].splice(0, 1);
+
+    energy[3].push(fft.getEnergy("highMid"));
+    energy[3].length > 30 && energy[3].splice(0, 1);
+
+    energy[4].push(fft.getEnergy("treble"));
+    energy[4].length > 30 && energy[4].splice(0, 1);
+
     tune.isPlaying() &&
       channel.push("pulse", {
         type: "waveform",
-        energy: Object.keys(energy).map(key =>
-          energy[key].slice(
-            Math.abs(Math.floor(tune.currentTime() * 15) - 20),
-            Math.floor(tune.currentTime() * 15) + 20
-          )
-        )
+        amplitude: amp.getLevel(),
+        energy: energy
+        // energyy: Object.keys(energy).map(key =>
+        //   energy[key].slice(
+        //     Math.abs(Math.floor(tune.currentTime() * 15) - 20),
+        //     Math.floor(tune.currentTime() * 15) + 20
+        //   )
+        // )
       });
 
     p.push();
