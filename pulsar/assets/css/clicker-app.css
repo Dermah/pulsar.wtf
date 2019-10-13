@@ -6,3 +6,19 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  padding: 1em;
+  justify-content: space-between;
+}
+
+.controls > div {
+  display: flex;
+  flex-direction: row;
+}
+
+#broadcasting {
+  size: 2em;
+}

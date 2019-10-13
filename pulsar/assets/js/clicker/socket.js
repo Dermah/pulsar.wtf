@@ -56,12 +56,18 @@ socket.connect();
 
 // Now that you are connected, you can join channels with a topic:
 let channel = socket.channel("audience:lobby", {});
+let broadcasting = true;
 
-const clickerButton = document.querySelector("#clicker");
+const clearButton = document.querySelector("#clear-button");
 
-clickerButton.addEventListener("click", e => {
-  console.log(e);
-  channel.push("click", {});
+var broadcastCheckbox = document.querySelector("#broadcasting");
+
+broadcastCheckbox.onchange = function() {
+  broadcasting = broadcastCheckbox.checked;
+};
+
+clearButton.addEventListener("click", e => {
+  channel.push("clear", {});
 });
 
 channel
@@ -73,5 +79,12 @@ channel
     console.log("Unable to join", resp);
   });
 
+const wrappedChannel = {
+  ...channel,
+  push: (name, data) => {
+    broadcasting && channel.push(name, data);
+  }
+};
+
 export default socket;
-export { channel };
+export { wrappedChannel as channel };

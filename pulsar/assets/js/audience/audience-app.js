@@ -51,6 +51,12 @@ new p5(p => {
     pulseSize = widthPc(size * 100);
   });
 
+  channel.on("clear", () => {
+    energyData = [];
+    totalAmp = 0;
+    pulseSize = 0;
+  });
+
   p.preload = () => {};
 
   p.setup = () => {

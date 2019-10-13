@@ -1,2 +1,8 @@
 
-  <button id="clicker">Click Me</button>
+<div class="controls">
+  <button id="clear-button">Clear</button>
+  <div>
+    <input id="broadcasting" type="checkbox" checked="true" />
+    <label for="broadcasting">Broadcast</label>
+  </div>
+</div>

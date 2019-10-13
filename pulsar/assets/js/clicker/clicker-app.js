@@ -121,17 +121,11 @@ new p5(function(p) {
     energy[4].push(fft.getEnergy(3000, 14000));
     energy[4].length > 30 && energy[4].splice(0, 1);
 
-    tune.isPlaying() &&
+    previewTune.isPlaying() &&
       channel.push("pulse", {
         type: "waveform",
         amplitude: amp.getLevel(),
         energy: energy
-        // energyy: Object.keys(energy).map(key =>
-        //   energy[key].slice(
-        //     Math.abs(Math.floor(tune.currentTime() * 15) - 20),
-        //     Math.floor(tune.currentTime() * 15) + 20
-        //   )
-        // )
       });
 
     p.push();
