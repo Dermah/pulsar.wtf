@@ -90,6 +90,7 @@ new p5(p => {
     totalAmp = 0;
     pulseSize = 0;
     fireflyPower = 0;
+    instrumentDrawings = [[], [], [], [], []];
   });
 
   p.preload = () => {};
