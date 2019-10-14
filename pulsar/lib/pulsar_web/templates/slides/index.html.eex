@@ -29,25 +29,25 @@
           <div style="height: 100%; display: flex; flex-direction: column; justify-content: space-around;">
             <p><a>http://pulsar.wtf</a></p>
             <h1>Outsourced<br/>VJ-ing</h1>
-            <p>@dermah</p>
+            <h5>Sputnik <small style="vertical-align: middle;">(@dermah)</small></h4>
           </div>
         </section>
         <section>
           <p><a>http://pulsar.wtf</a></p>
           <img src="https://s3-ap-southeast-2.amazonaws.com/pulsar.wtf-assets/images/dj.jpg"/>
-          <p>@dermah</p>
+          <h5>Sputnik <small style="vertical-align: middle;">(@dermah)</small></h4>
         </section>
         <section data-transition="fade">
           <p><a>http://pulsar.wtf</a></p>
           <img src="https://s3-ap-southeast-2.amazonaws.com/pulsar.wtf-assets/images/vj.jpg"/>
-          <p>@dermah</p>
+          <h5>Sputnik <small style="vertical-align: middle;">(@dermah)</small></h4>
         </section>
         <section style="height: 100%;">
           <div style="height: 100%; display: flex; flex-direction: column; justify-content: space-around;">
             <p><a>http://pulsar.wtf</a></p>
             <h3><strike>Outsourced<br/>VJ-ing</strike></h3>
             <h1>How To VJ Wrong</h1>
-            <p>@dermah</p>
+            <h5>Sputnik <small style="vertical-align: middle;">(@dermah)</small></h5>
           </div>
         </section>
 
@@ -57,6 +57,19 @@
 
         <section>
           <div id="mpe-video"></div>
+        </section>
+
+        <section>
+          <video data-autoplay loop muted>
+            <source data-src="https://s3-ap-southeast-2.amazonaws.com/pulsar.wtf-assets/videos/PULSAR-SNIP.mp4" type="video/mp4" />
+          </video>
+        </section>
+
+        <section>
+          <img src="https://s3-ap-southeast-2.amazonaws.com/pulsar.wtf-assets/images/system.jpg">
+        </section>
+
+        <section>
         </section>
       </div>
     </div>
