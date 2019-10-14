@@ -44,19 +44,41 @@ new p5(p => {
     "melody"
   ];
 
-  channel.on("pulse", ({ type, size, energy, amplitude, decay, value }) => {
-    if (type === "waveform") {
-      energyData = energy;
-      totalAmp = amplitude;
-    } else if (type === "firefly") {
-      fireflyPower = size;
-      fireflyDecay = decay;
-    } else if (type === "inputAllowed") {
-      inputAllowed = value;
-    } else {
-      pulseSize = widthPc(size * 100);
+  let instrumentDrawings = [[], [], [], [], []];
+  channel.on(
+    "pulse",
+    ({
+      type,
+      size,
+      energy,
+      amplitude,
+      decay,
+      value,
+      instrument: recievedInstrument,
+      x,
+      y
+    }) => {
+      if (type === "waveform") {
+        energyData = energy;
+        totalAmp = amplitude;
+      } else if (type === "firefly") {
+        fireflyPower = size;
+        fireflyDecay = decay;
+      } else if (type === "inputAllowed") {
+        inputAllowed = value;
+      } else if (type === "instrument") {
+        console.log(x, y);
+        instrumentDrawings[recievedInstrument].push({
+          x: x * p.width,
+          y: y * p.height,
+          alive: 10
+        });
+      } else {
+        console.log(x, y);
+        pulseSize = widthPc(size * 100);
+      }
     }
-  });
+  );
 
   channel.on("clear", () => {
     energyData = [];
@@ -74,8 +96,14 @@ new p5(p => {
       Math.floor(Math.random() * 5);
     const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
 
-    canvas.mouseClicked(function() {
+    canvas.mousePressed(function(e) {
       noSleep.enable();
+      channel.push("pulse", {
+        type: "instrument",
+        instrument,
+        x: p.mouseX / p.width,
+        y: p.mouseY / p.height
+      });
     });
   };
 
@@ -101,6 +129,16 @@ new p5(p => {
     }
   }
 
+  function drawInstruments() {
+    instrumentDrawings.map(drawings =>
+      drawings.map(drawing => {
+        p.rect(drawing.x, drawing.y, 20, 20);
+        drawing.alive--;
+        if (drawing.alive <= 0) drawings.shift();
+      })
+    );
+  }
+
   p.draw = () => {
     p.background(
       (instrument % 3 === 0 &&
@@ -116,6 +154,7 @@ new p5(p => {
 
     // Fireflys
     drawFirefly();
+    drawInstruments();
 
     p.textAlign(p.CENTER);
     p.fill(255);

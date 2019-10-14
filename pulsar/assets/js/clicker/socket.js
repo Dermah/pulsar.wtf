@@ -96,7 +96,7 @@ rightButton.addEventListener("click", e => {
 });
 
 fireflyButton.addEventListener("click", e => {
-  channel.push("pulse", { type: "firefly", size: 250, decay: 1.01 });
+  channel.push("pulse", { type: "firefly", size: 250, decay: 1.02 });
 });
 
 document.onkeydown = function(e) {
