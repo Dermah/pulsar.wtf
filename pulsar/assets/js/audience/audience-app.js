@@ -56,7 +56,9 @@ new p5(p => {
       value,
       instrument: recievedInstrument,
       x,
-      y
+      y,
+      angle,
+      color
     }) => {
       if (type === "waveform") {
         energyData = energy;
@@ -67,14 +69,14 @@ new p5(p => {
       } else if (type === "inputAllowed") {
         inputAllowed = value;
       } else if (type === "instrument") {
-        console.log(x, y);
         instrumentDrawings[recievedInstrument].push({
           x: x * p.width,
           y: y * p.height,
+          angle,
+          color,
           alive: 10
         });
       } else {
-        console.log(x, y);
         pulseSize = widthPc(size * 100);
       }
     }
@@ -96,13 +98,15 @@ new p5(p => {
       Math.floor(Math.random() * 5);
     const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
 
-    canvas.mousePressed(function(e) {
+    canvas.touchStarted(function(e) {
       noSleep.enable();
       channel.push("pulse", {
         type: "instrument",
         instrument,
         x: p.mouseX / p.width,
-        y: p.mouseY / p.height
+        y: p.mouseY / p.height,
+        angle: p.random(2 * p.PI),
+        color: { r: p.random(255), g: p.random(255), b: p.random(255) }
       });
     });
   };
@@ -130,27 +134,41 @@ new p5(p => {
   }
 
   function drawInstruments() {
-    instrumentDrawings.map(drawings =>
+    instrumentDrawings.map(drawings => {
       drawings.map(drawing => {
-        p.rect(drawing.x, drawing.y, 20, 20);
+        p.push();
+        p.translate(drawing.x, drawing.y);
+        p.scale((widthPc(10) * (10 - drawing.alive)) / 10);
+        p.rotate(drawing.angle);
+        p.fill(
+          drawing.color.r,
+          drawing.color.g,
+          drawing.color.b,
+          255 * (drawing.alive / 10)
+        );
+        p.rect(0, 0, 20, 20);
         drawing.alive--;
-        if (drawing.alive <= 0) drawings.shift();
-      })
-    );
+        p.pop();
+      });
+      if (drawings[0] && drawings[0].alive <= 0) {
+        drawings.shift();
+      }
+    });
   }
 
   p.draw = () => {
-    p.background(
-      (instrument % 3 === 0 &&
-        totalAmp * (energyData[0] && energyData[0][15])) ||
-        0,
-      (instrument % 3 === 1 &&
-        totalAmp * (energyData[1] && energyData[1][15])) ||
-        0,
-      (instrument % 3 === 2 &&
-        totalAmp * (energyData[2] && energyData[2][15])) ||
-        0
-    );
+    p.background(0, 0, 0);
+    // p.background(
+    //   (instrument % 3 === 0 &&
+    //     totalAmp * (energyData[0] && energyData[0][15])) ||
+    //     0,
+    //   (instrument % 3 === 1 &&
+    //     totalAmp * (energyData[1] && energyData[1][15])) ||
+    //     0,
+    //   (instrument % 3 === 2 &&
+    //     totalAmp * (energyData[2] && energyData[2][15])) ||
+    //     0
+    // );
 
     // Fireflys
     drawFirefly();
@@ -170,7 +188,7 @@ new p5(p => {
 
     p.push();
     p.rectMode(p.CENTER);
-    p.translate(-p.width / 2, -p.height / 2);
+    p.translate(-p.width / 2, 0);
 
     // energyData.map((freqEnergy, i) => {
     const i = 0;
