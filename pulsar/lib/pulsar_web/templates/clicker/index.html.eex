@@ -6,7 +6,11 @@
     <button id="right-button">▶️</button>
   </div>
 
-  <button id="firefly-button">🌅</button>
+  <div>
+    <button id="firefly-button">🌅</button>
+    <button id="strobe-button">⚡️</button>
+    <button id="strobe-long-button">⚡️️️️️️⚡️️️️️️⚡️️️️️️</button>
+  </div>
 
   <div>
     <input id="broadcasting" type="checkbox" checked="true" />
@@ -16,6 +20,11 @@
   <div>
     <input id="allow-audience" type="checkbox"/>
     <label for="allow-audience">Audience</label>
+  </div>
+
+  <div>
+    <input id="autostrobe" type="checkbox"/>
+    <label for="autostrobe">AutoStrobe</label>
   </div>
 
 </div>

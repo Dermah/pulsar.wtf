@@ -63,9 +63,12 @@ const clearButton = document.querySelector("#clear-button");
 const leftButton = document.querySelector("#left-button");
 const rightButton = document.querySelector("#right-button");
 const fireflyButton = document.querySelector("#firefly-button");
+const strobeButton = document.querySelector("#strobe-button");
+const strobeLongButton = document.querySelector("#strobe-long-button");
 
 const broadcastCheckbox = document.querySelector("#broadcasting");
 const audienceCheckbox = document.querySelector("#allow-audience");
+const autostrobeCheckbox = document.querySelector("#autostrobe");
 
 broadcastCheckbox.onchange = function() {
   broadcasting = broadcastCheckbox.checked;
@@ -79,11 +82,24 @@ const audienceEnableBroadcast = () => {
   });
 };
 
+const autostrobeEnableBroadcast = () => {
+  console.log("send", autostrobeCheckbox.checked);
+  channel.push("pulse", {
+    type: "autostrobe",
+    value: autostrobeCheckbox.checked
+  });
+};
+
 audienceCheckbox.onchange = function() {
   audienceEnableBroadcast();
 };
 
+autostrobeCheckbox.onchange = function() {
+  autostrobeEnableBroadcast();
+};
+
 setInterval(() => audienceEnableBroadcast(), 5000);
+setInterval(() => autostrobeEnableBroadcast(), 5000);
 
 clearButton.addEventListener("click", e => {
   channel.push("clear", {});
@@ -99,6 +115,14 @@ rightButton.addEventListener("click", e => {
 
 fireflyButton.addEventListener("click", e => {
   channel.push("pulse", { type: "firefly", size: 250, decay: 1.02 });
+});
+
+strobeButton.addEventListener("click", e => {
+  channel.push("pulse", { type: "strobe", size: 10 });
+});
+
+strobeLongButton.addEventListener("click", e => {
+  channel.push("pulse", { type: "strobe", size: 25 });
 });
 
 document.onkeydown = function(e) {

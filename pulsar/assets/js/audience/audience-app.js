@@ -39,6 +39,10 @@ new p5(p => {
 
   let inputAllowed = false;
 
+  let autostrobe = false;
+  let maxStrobe = 0;
+  let strobe = 0;
+
   const instrumentMap = [
     "bass/synth",
     "drums",
@@ -71,6 +75,11 @@ new p5(p => {
         fireflyDecay = decay;
       } else if (type === "inputAllowed") {
         inputAllowed = value;
+      } else if (type === "strobe") {
+        strobe = size;
+        maxStrobe = size;
+      } else if (type === "autostrobe") {
+        autostrobe = value;
       } else if (type === "instrument") {
         instrumentDrawings[recievedInstrument].push({
           x: x * p.width,
@@ -258,17 +267,26 @@ new p5(p => {
 
   p.draw = () => {
     p.background(0, 0, 0);
-    // p.background(
-    //   (instrument % 3 === 0 &&
-    //     totalAmp * (energyData[0] && energyData[0][15])) ||
-    //     0,
-    //   (instrument % 3 === 1 &&
-    //     totalAmp * (energyData[1] && energyData[1][15])) ||
-    //     0,
-    //   (instrument % 3 === 2 &&
-    //     totalAmp * (energyData[2] && energyData[2][15])) ||
-    //     0
-    // );
+
+    if (autostrobe) {
+      p.background(
+        (instrument % 3 === 0 &&
+          totalAmp * (energyData[0] && energyData[0][15])) ||
+          0,
+        (instrument % 3 === 1 &&
+          totalAmp * (energyData[1] && energyData[1][15])) ||
+          0,
+        (instrument % 3 === 2 &&
+          totalAmp * (energyData[2] && energyData[2][15])) ||
+          0
+      );
+    }
+
+    if (strobe > 0) {
+      const pc = 255 * (strobe / maxStrobe);
+      strobe % 2 === 0 && p.background(pc);
+      strobe--;
+    }
 
     // Fireflys
     drawFirefly();
