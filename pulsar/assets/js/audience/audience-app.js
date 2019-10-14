@@ -97,6 +97,7 @@ new p5(p => {
   p.setup = () => {
     p.frameRate(24);
     instrument = Number.parseInt(INSTRUMENT, 10);
+    console.log("INSTRUMENT", instrument);
     const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
 
     var supportsTouch = "ontouchstart" in window || navigator.msMaxTouchPoints;
@@ -112,7 +113,7 @@ new p5(p => {
       });
     }
 
-    if (supportsTouch) {
+    if (!supportsTouch) {
       canvas.mousePressed(firePress);
     } else {
       canvas.touchStarted(firePress);
