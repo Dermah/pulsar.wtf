@@ -81,7 +81,7 @@ audienceCheckbox.onchange = function() {
   audienceEnableBroadcast();
 };
 
-// setInterval(() => audienceEnableBroadcast(), 2000);
+setInterval(() => audienceEnableBroadcast(), 5000);
 
 clearButton.addEventListener("click", e => {
   channel.push("clear", {});
