@@ -104,14 +104,15 @@ new p5(p => {
     var supportsTouch = "ontouchstart" in window || navigator.msMaxTouchPoints;
     function firePress() {
       noSleep.enable();
-      channel.push("pulse", {
-        type: "instrument",
-        instrument,
-        x: p.mouseX / p.width,
-        y: p.mouseY / p.height,
-        angle: p.random(2 * p.PI),
-        color: { r: p.random(255), g: p.random(255), b: p.random(255) }
-      });
+      inputAllowed &&
+        channel.push("pulse", {
+          type: "instrument",
+          instrument,
+          x: p.mouseX / p.width,
+          y: p.mouseY / p.height,
+          angle: p.random(2 * p.PI),
+          color: { r: p.random(255), g: p.random(255), b: p.random(255) }
+        });
     }
 
     if (!supportsTouch) {

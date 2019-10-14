@@ -58,7 +58,6 @@ socket.connect();
 let channel = socket.channel("audience:lobby", {});
 let slideChannel = socket.channel("slides:lobby", {});
 let broadcasting = true;
-let allowAudience = false;
 
 const clearButton = document.querySelector("#clear-button");
 const leftButton = document.querySelector("#left-button");
@@ -73,11 +72,14 @@ broadcastCheckbox.onchange = function() {
 };
 
 const audienceEnableBroadcast = () => {
-  channel.push("pulse", { type: "inputAllowed", value: allowAudience });
+  console.log("send", audienceCheckbox.checked);
+  channel.push("pulse", {
+    type: "inputAllowed",
+    value: audienceCheckbox.checked
+  });
 };
 
 audienceCheckbox.onchange = function() {
-  allowAudience = audienceCheckbox.checked;
   audienceEnableBroadcast();
 };
 
