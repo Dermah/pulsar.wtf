@@ -21,7 +21,8 @@ Reveal.initialize({
     // { src: "/js/slides/plugin/markdown/markdown.js" },
     // { src: "/js/slides/plugin/notes/notes.js", async: true },
     // { src: "/js/slides/plugin/highlight/highlight.js", async: true }
-  ]
+  ],
+  hash: true
 });
 
 let socket = new Socket("/socket", { params: { token: window.userToken } });
@@ -37,6 +38,5 @@ slidesChannel
   });
 
 slidesChannel.on("slides", ({ action }) => {
-  console.log("eg");
   Reveal[action]();
 });

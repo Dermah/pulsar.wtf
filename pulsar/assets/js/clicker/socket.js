@@ -81,6 +81,23 @@ rightButton.addEventListener("click", e => {
   slideChannel.push("slides", { action: "right" });
 });
 
+document.onkeydown = function(e) {
+  switch (e.keyCode) {
+    case 37:
+      slideChannel.push("slides", { action: "left" });
+      break;
+    case 38:
+      slideChannel.push("slides", { action: "up" });
+      break;
+    case 39:
+      slideChannel.push("slides", { action: "right" });
+      break;
+    case 40:
+      slideChannel.push("slides", { action: "down" });
+      break;
+  }
+};
+
 channel
   .join()
   .receive("ok", resp => {
