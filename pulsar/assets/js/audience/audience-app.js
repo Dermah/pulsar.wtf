@@ -99,7 +99,8 @@ new p5(p => {
     instrument = Number.parseInt(INSTRUMENT, 10);
     const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
 
-    canvas.mousePressed(function(e) {
+    var supportsTouch = "ontouchstart" in window || navigator.msMaxTouchPoints;
+    function firePress() {
       noSleep.enable();
       channel.push("pulse", {
         type: "instrument",
@@ -109,7 +110,13 @@ new p5(p => {
         angle: p.random(2 * p.PI),
         color: { r: p.random(255), g: p.random(255), b: p.random(255) }
       });
-    });
+    }
+
+    if (supportsTouch) {
+      canvas.mousePressed(firePress);
+    } else {
+      canvas.touchStarted(firePress);
+    }
   };
 
   function drawFirefly() {
