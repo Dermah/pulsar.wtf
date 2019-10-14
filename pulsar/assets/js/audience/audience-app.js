@@ -21,18 +21,6 @@ import NoSleep from "nosleep.js";
 
 const noSleep = new NoSleep();
 
-function getQueryVariable(variable) {
-  var query = window.location.search.substring(1);
-  var vars = query.split("&");
-  for (var i = 0; i < vars.length; i++) {
-    var pair = vars[i].split("=");
-    if (pair[0] == variable) {
-      return pair[1];
-    }
-  }
-  return false;
-}
-
 new p5(p => {
   const widthPc = widthPercent => (p.width * widthPercent) / 100;
   const heightPc = heightPercent => (p.height * heightPercent) / 100;
@@ -61,7 +49,7 @@ new p5(p => {
 
   p.setup = () => {
     instrument =
-      Number.parseInt(getQueryVariable("instrument"), 10) ||
+      Number.parseInt(p.getURLParams()["instrument"], 10) ||
       Math.floor(Math.random() * 5);
     const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
 
