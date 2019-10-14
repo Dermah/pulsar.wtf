@@ -185,7 +185,7 @@ new p5(p => {
         drawing.color.b,
         255 * (drawing.alive / 10)
       );
-      p.strokeWeight(25);
+      p.strokeWeight((widthPc(10) * drawing.alive) / 10);
       p.noFill();
       for (let c = 0; c < 10; c++) {
         p.curve(
