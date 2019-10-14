@@ -225,6 +225,36 @@ new p5(p => {
     }
   }
 
+  const rainbow = {
+    0: p.color(148, 0, 211),
+    1: p.color(75, 0, 130),
+    2: p.color(0, 0, 255),
+    3: p.color(0, 255, 0),
+    4: p.color(255, 255, 0),
+    5: p.color(255, 127, 0),
+    6: p.color(255, 0, 0),
+    7: p.color(255, 0, 0)
+  };
+  function drawBeams() {
+    p.blendMode(p.DIFFERENCE);
+    instrumentDrawings[3].map(drawing => {
+      p.push();
+      const pick = Math.floor(drawing.color.r / 35);
+      const color = rainbow[pick];
+      p.fill(color);
+      p.strokeWeight(0);
+      p.translate(widthPc(50), p.height);
+      p.rotate((drawing.x / widthPc(100)) * (p.PI / 2) - p.PI / 4);
+      p.rect(0, p.height, 20 * drawing.alive, (10 - drawing.alive) * p.height);
+      drawing.alive--;
+      p.pop();
+    });
+    if (instrumentDrawings[3][0] && instrumentDrawings[3][0].alive <= 0) {
+      instrumentDrawings[3].shift();
+    }
+    p.blendMode(p.BLEND);
+  }
+
   p.draw = () => {
     p.background(0, 0, 0);
     // p.background(
@@ -277,6 +307,8 @@ new p5(p => {
       );
     });
     // });
+
+    drawBeams();
 
     p.pop();
   };
