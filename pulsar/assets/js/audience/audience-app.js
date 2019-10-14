@@ -175,6 +175,36 @@ new p5(p => {
       instrumentDrawings[1].shift();
     }
 
+    instrumentDrawings[2].map(drawing => {
+      p.push();
+      p.stroke(
+        drawing.color.r,
+        drawing.color.g,
+        drawing.color.b,
+        255 * (drawing.alive / 10)
+      );
+      p.strokeWeight(25);
+      p.noFill();
+      for (let c = 0; c < 10; c++) {
+        p.curve(
+          drawing.x + p.random(widthPc(70)) - widthPc(35),
+          drawing.y + p.random(widthPc(70)) - widthPc(35),
+          drawing.x,
+          drawing.y,
+          drawing.x + p.random(widthPc(70)) - widthPc(35),
+          drawing.y + p.random(widthPc(70)) - widthPc(35),
+          drawing.x + p.random(widthPc(70)) - widthPc(35),
+          drawing.y + p.random(widthPc(70)) - widthPc(35)
+        );
+      }
+      drawing.alive -= 0.5;
+      p.pop();
+    });
+    if (instrumentDrawings[2][0] && instrumentDrawings[2][0].alive <= 0) {
+      instrumentDrawings[2].shift();
+    }
+    p.strokeWeight(1);
+
     instrumentDrawings[4].map(drawing => {
       p.push();
       p.translate(drawing.x, drawing.y);
