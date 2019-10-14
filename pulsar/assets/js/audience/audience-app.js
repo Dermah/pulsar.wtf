@@ -69,6 +69,7 @@ new p5(p => {
       } else if (type === "inputAllowed") {
         inputAllowed = value;
       } else if (type === "instrument") {
+        // console.log(recievedInstrument);
         instrumentDrawings[recievedInstrument].push({
           x: x * p.width,
           y: y * p.height,
@@ -98,7 +99,8 @@ new p5(p => {
       Math.floor(Math.random() * 5);
     const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
 
-    canvas.touchStarted(function(e) {
+    canvas.mousePressed(function(e) {
+      console.log("eh");
       noSleep.enable();
       channel.push("pulse", {
         type: "instrument",
@@ -134,26 +136,43 @@ new p5(p => {
   }
 
   function drawInstruments() {
-    instrumentDrawings.map(drawings => {
-      drawings.map(drawing => {
-        p.push();
-        p.translate(drawing.x, drawing.y);
-        p.scale((widthPc(10) * (10 - drawing.alive)) / 10);
-        p.rotate(drawing.angle);
-        p.fill(
-          drawing.color.r,
-          drawing.color.g,
-          drawing.color.b,
-          255 * (drawing.alive / 10)
-        );
-        p.rect(0, 0, 20, 20);
-        drawing.alive--;
-        p.pop();
-      });
-      if (drawings[0] && drawings[0].alive <= 0) {
-        drawings.shift();
-      }
+    instrumentDrawings[0].map(drawing => {
+      // console.log("eh");
+      p.push();
+      p.translate(drawing.x, drawing.y);
+      p.scale((widthPc(10) * (10 - drawing.alive)) / 10);
+      p.rotate(drawing.angle);
+      p.fill(
+        drawing.color.r,
+        drawing.color.g,
+        drawing.color.b,
+        255 * (drawing.alive / 10)
+      );
+      p.rect(0, 0, 20, 20);
+      drawing.alive--;
+      p.pop();
     });
+    if (instrumentDrawings[0][0] && instrumentDrawings[0][0].alive <= 0) {
+      instrumentDrawings[0].shift();
+    }
+
+    instrumentDrawings[4].map(drawing => {
+      console.log("drawin");
+      p.push();
+      p.translate(drawing.x, drawing.y);
+      // p.scale((widthPc(10) * (10 - drawing.alive)) / 10);
+      p.fill(255, 255, 255);
+      p.strokeWeight(0);
+      for (let c = 0; c < 10; c++) {
+        p.rotate(drawing.angle * c);
+        p.circle(c * p.random(10), c * p.random(), 20 * drawing.alive);
+      }
+      drawing.alive--;
+      p.pop();
+    });
+    if (instrumentDrawings[4][0] && instrumentDrawings[4][0].alive <= 0) {
+      instrumentDrawings[4].shift();
+    }
   }
 
   p.draw = () => {
