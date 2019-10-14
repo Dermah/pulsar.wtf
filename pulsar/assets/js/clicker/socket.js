@@ -62,6 +62,7 @@ let broadcasting = true;
 const clearButton = document.querySelector("#clear-button");
 const leftButton = document.querySelector("#left-button");
 const rightButton = document.querySelector("#right-button");
+const fireflyButton = document.querySelector("#firefly-button");
 
 var broadcastCheckbox = document.querySelector("#broadcasting");
 
@@ -79,6 +80,10 @@ leftButton.addEventListener("click", e => {
 
 rightButton.addEventListener("click", e => {
   slideChannel.push("slides", { action: "right" });
+});
+
+fireflyButton.addEventListener("click", e => {
+  channel.push("pulse", { type: "firefly", size: 250, decay: 1.01 });
 });
 
 document.onkeydown = function(e) {

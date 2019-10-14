@@ -31,23 +31,32 @@ new p5(p => {
   let energyData = [];
   let totalAmp;
 
-  channel.on("pulse", ({ type, size, energy, amplitude }) => {
+  let fireflyPower;
+  let fireflyDecay;
+
+  channel.on("pulse", ({ type, size, energy, amplitude, decay }) => {
     if (type === "waveform") {
       energyData = energy;
       totalAmp = amplitude;
+    } else if (type === "firefly") {
+      fireflyPower = size;
+      fireflyDecay = decay;
+    } else {
+      pulseSize = widthPc(size * 100);
     }
-    pulseSize = widthPc(size * 100);
   });
 
   channel.on("clear", () => {
     energyData = [];
     totalAmp = 0;
     pulseSize = 0;
+    fireflyPower = 0;
   });
 
   p.preload = () => {};
 
   p.setup = () => {
+    p.frameRate(24);
     instrument =
       Number.parseInt(p.getURLParams()["instrument"], 10) ||
       Math.floor(Math.random() * 5);
@@ -57,6 +66,28 @@ new p5(p => {
       noSleep.enable();
     });
   };
+
+  function drawFirefly() {
+    if (fireflyPower > 0.000001) {
+      const boxWidth = p.width / 1;
+      const boxHeight = p.height / 3;
+
+      p.noStroke(0);
+      for (let i = 0; i < 5; i++) {
+        for (let j = 0; j < 5; j++) {
+          p.fill(
+            255,
+            p.random() * 170,
+            p.random() * 170,
+            p.random() * fireflyPower
+          );
+          p.rect(i * boxWidth, j * boxHeight, boxWidth, boxHeight);
+        }
+      }
+      p.strokeWeight(1);
+      fireflyPower = fireflyPower / fireflyDecay;
+    }
+  }
 
   p.draw = () => {
     p.background(
@@ -70,6 +101,9 @@ new p5(p => {
         totalAmp * (energyData[2] && energyData[2][15])) ||
         0
     );
+
+    // Fireflys
+    drawFirefly();
 
     p.textAlign(p.CENTER);
     p.fill(255);

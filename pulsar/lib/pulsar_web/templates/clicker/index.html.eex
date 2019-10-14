@@ -9,4 +9,6 @@
     <input id="broadcasting" type="checkbox" checked="true" />
     <label for="broadcasting">Broadcast</label>
   </div>
+
+  <button id="firefly-button">🌅</button>
 </div>
