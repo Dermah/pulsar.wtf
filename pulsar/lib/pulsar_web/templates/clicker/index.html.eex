@@ -5,10 +5,17 @@
     <button id="left-button">◀️</button>
     <button id="right-button">▶️</button>
   </div>
+
+  <button id="firefly-button">🌅</button>
+
   <div>
     <input id="broadcasting" type="checkbox" checked="true" />
     <label for="broadcasting">Broadcast</label>
   </div>
 
-  <button id="firefly-button">🌅</button>
+  <div>
+    <input id="allow-audience" type="checkbox"/>
+    <label for="allow-audience">Audience</label>
+  </div>
+
 </div>

@@ -58,17 +58,30 @@ socket.connect();
 let channel = socket.channel("audience:lobby", {});
 let slideChannel = socket.channel("slides:lobby", {});
 let broadcasting = true;
+let allowAudience = false;
 
 const clearButton = document.querySelector("#clear-button");
 const leftButton = document.querySelector("#left-button");
 const rightButton = document.querySelector("#right-button");
 const fireflyButton = document.querySelector("#firefly-button");
 
-var broadcastCheckbox = document.querySelector("#broadcasting");
+const broadcastCheckbox = document.querySelector("#broadcasting");
+const audienceCheckbox = document.querySelector("#allow-audience");
 
 broadcastCheckbox.onchange = function() {
   broadcasting = broadcastCheckbox.checked;
 };
+
+const audienceEnableBroadcast = () => {
+  channel.push("pulse", { type: "inputAllowed", value: allowAudience });
+};
+
+audienceCheckbox.onchange = function() {
+  allowAudience = audienceCheckbox.checked;
+  audienceEnableBroadcast();
+};
+
+// setInterval(() => audienceEnableBroadcast(), 2000);
 
 clearButton.addEventListener("click", e => {
   channel.push("clear", {});

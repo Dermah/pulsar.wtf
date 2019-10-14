@@ -34,13 +34,25 @@ new p5(p => {
   let fireflyPower;
   let fireflyDecay;
 
-  channel.on("pulse", ({ type, size, energy, amplitude, decay }) => {
+  let inputAllowed = false;
+
+  const instrumentMap = [
+    "bass/synth",
+    "drums",
+    "percussion",
+    "horns",
+    "melody"
+  ];
+
+  channel.on("pulse", ({ type, size, energy, amplitude, decay, value }) => {
     if (type === "waveform") {
       energyData = energy;
       totalAmp = amplitude;
     } else if (type === "firefly") {
       fireflyPower = size;
       fireflyDecay = decay;
+    } else if (type === "inputAllowed") {
+      inputAllowed = value;
     } else {
       pulseSize = widthPc(size * 100);
     }
@@ -107,7 +119,8 @@ new p5(p => {
 
     p.textAlign(p.CENTER);
     p.fill(255);
-    p.text(`You are ${instrument}`, p.width / 2, 15);
+    inputAllowed &&
+      p.text(`You are ${instrumentMap[instrument]}`, p.width / 2, 15);
     p.push();
     p.translate(p.width / 2, p.height / 2);
 
