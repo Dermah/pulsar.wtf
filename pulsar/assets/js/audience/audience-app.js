@@ -22,6 +22,9 @@ import NoSleep from "nosleep.js";
 const noSleep = new NoSleep();
 
 new p5(p => {
+  const INSTRUMENT =
+    p.getURLParams()["instrument"] || Math.floor(Math.random() * 5);
+
   const widthPc = widthPercent => (p.width * widthPercent) / 100;
   const heightPc = heightPercent => (p.height * heightPercent) / 100;
 
@@ -69,7 +72,6 @@ new p5(p => {
       } else if (type === "inputAllowed") {
         inputAllowed = value;
       } else if (type === "instrument") {
-        // console.log(recievedInstrument);
         instrumentDrawings[recievedInstrument].push({
           x: x * p.width,
           y: y * p.height,
@@ -94,13 +96,10 @@ new p5(p => {
 
   p.setup = () => {
     p.frameRate(24);
-    instrument =
-      Number.parseInt(p.getURLParams()["instrument"], 10) ||
-      Math.floor(Math.random() * 5);
+    instrument = Number.parseInt(INSTRUMENT, 10);
     const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
 
     canvas.mousePressed(function(e) {
-      console.log("eh");
       noSleep.enable();
       channel.push("pulse", {
         type: "instrument",
@@ -137,7 +136,6 @@ new p5(p => {
 
   function drawInstruments() {
     instrumentDrawings[0].map(drawing => {
-      // console.log("eh");
       p.push();
       p.translate(drawing.x, drawing.y);
       p.scale((widthPc(10) * (10 - drawing.alive)) / 10);
@@ -157,7 +155,6 @@ new p5(p => {
     }
 
     instrumentDrawings[4].map(drawing => {
-      console.log("drawin");
       p.push();
       p.translate(drawing.x, drawing.y);
       // p.scale((widthPc(10) * (10 - drawing.alive)) / 10);
