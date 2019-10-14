@@ -135,7 +135,21 @@ new p5(p => {
   }
 
   function drawInstruments() {
+    p.blendMode(p.DIFFERENCE);
     instrumentDrawings[0].map(drawing => {
+      p.push();
+      p.translate(p.width / 2, p.height / 2);
+      p.fill(drawing.color.r, drawing.color.g, drawing.color.b);
+      p.circle(0, 0, widthPc(drawing.alive * 10));
+      drawing.alive -= 0.25;
+      p.pop();
+    });
+    if (instrumentDrawings[0][0] && instrumentDrawings[0][0].alive <= 0) {
+      instrumentDrawings[0].shift();
+    }
+    p.blendMode(p.BLEND);
+
+    instrumentDrawings[1].map(drawing => {
       p.push();
       p.translate(drawing.x, drawing.y);
       p.scale((widthPc(10) * (10 - drawing.alive)) / 10);
@@ -150,8 +164,8 @@ new p5(p => {
       drawing.alive--;
       p.pop();
     });
-    if (instrumentDrawings[0][0] && instrumentDrawings[0][0].alive <= 0) {
-      instrumentDrawings[0].shift();
+    if (instrumentDrawings[1][0] && instrumentDrawings[1][0].alive <= 0) {
+      instrumentDrawings[1].shift();
     }
 
     instrumentDrawings[4].map(drawing => {
