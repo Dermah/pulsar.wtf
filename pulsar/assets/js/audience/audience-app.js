@@ -43,13 +43,8 @@ new p5(p => {
   let maxStrobe = 0;
   let strobe = 0;
 
-  const instrumentMap = [
-    "bass/synth",
-    "drums",
-    "percussion",
-    "horns",
-    "melody"
-  ];
+  const instrumentMap = ["bass", "drums", "percussion", "horns", "melody"];
+  let countdown;
 
   let instrumentDrawings = [[], [], [], [], []];
   channel.on(
@@ -80,6 +75,8 @@ new p5(p => {
         maxStrobe = size;
       } else if (type === "autostrobe") {
         autostrobe = value;
+      } else if (type === "countdown") {
+        countdown = value;
       } else if (type === "instrument") {
         instrumentDrawings[recievedInstrument].push({
           x: x * p.width,
@@ -288,7 +285,14 @@ new p5(p => {
       strobe--;
     }
 
-    // Fireflys
+    if (countdown >= 1) {
+      p.fill(150, 150, 150, 255 * (countdown / 10));
+      p.textSize(p.width / 10);
+      p.text(countdown, widthPc(5), p.height - heightPc(5));
+    }
+    p.textSize(12);
+
+    // Fireflys;
     drawFirefly();
     drawInstruments();
 
