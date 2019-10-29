@@ -122,7 +122,7 @@
         }
       }
     </script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/js/reveal.js"></script>
     <script src="<%= Routes.static_path(@conn, "/js/slides.js") %>"></script>
   </body>
 </html>

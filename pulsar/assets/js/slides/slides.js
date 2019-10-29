@@ -1,15 +1,15 @@
 import css1 from "../../css/slides/slides.css";
 import { Socket } from "phoenix";
 
-import Reveal from "./reveal.js";
-window.Reveal = Reveal;
-global.Reveal = Reveal;
+// import Reveal from "./reveal.js";
+// window.Reveal = Reveal;
+// global.Reveal = Reveal;
 
 console.log(Reveal);
 
-import("./plugin/markdown/marked.js");
-import("./plugin/markdown/markdown.js");
-import("./plugin/notes/notes.js");
+// import("./plugin/markdown/marked.js");
+// import("./plugin/markdown/markdown.js");
+// import("./plugin/notes/notes.js");
 // import("./plugin/highlight/highlight.js");
 
 // More info about config & dependencies:
@@ -17,9 +17,19 @@ import("./plugin/notes/notes.js");
 // - https://github.com/hakimel/reveal.js#dependencies
 Reveal.initialize({
   dependencies: [
-    // { src: "/js/slides/plugin/markdown/marked.js" },
-    // { src: "/js/slides/plugin/markdown/markdown.js" },
-    // { src: "/js/slides/plugin/notes/notes.js", async: true },
+    {
+      src:
+        "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/markdown/marked.js"
+    },
+    {
+      src:
+        "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/markdown/markdown.js"
+    },
+    {
+      src:
+        "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/notes/notes.js",
+      async: true
+    }
     // { src: "/js/slides/plugin/highlight/highlight.js", async: true }
   ],
   hash: true

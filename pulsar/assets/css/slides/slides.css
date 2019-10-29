@@ -1,7 +1,7 @@
-@import "./reset.css";
-@import "./reveal.css";
-@import "./theme/black.css";
-@import "../lib/css/monokai.css";
+@import "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/css/reset.css";
+@import "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/css/reveal.css";
+@import "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/css/theme/black.css";
+@import "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/lib/css/monokai.css";
 
 canvas {
   display: block;
