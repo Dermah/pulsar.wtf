@@ -1,36 +1,21 @@
 import css1 from "../../css/slides/slides.css";
 import { Socket } from "phoenix";
 
-// import Reveal from "./reveal.js";
-// window.Reveal = Reveal;
-// global.Reveal = Reveal;
+// We assume Reveal has been loaded globally before this script
 
 console.log(Reveal);
-
-// import("./plugin/markdown/marked.js");
-// import("./plugin/markdown/markdown.js");
-// import("./plugin/notes/notes.js");
-// import("./plugin/highlight/highlight.js");
 
 // More info about config & dependencies:
 // - https://github.com/hakimel/reveal.js#configuration
 // - https://github.com/hakimel/reveal.js#dependencies
+
+const revealCDN = "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0";
 Reveal.initialize({
   dependencies: [
-    {
-      src:
-        "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/markdown/marked.js"
-    },
-    {
-      src:
-        "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/markdown/markdown.js"
-    },
-    {
-      src:
-        "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/notes/notes.js",
-      async: true
-    }
-    // { src: "/js/slides/plugin/highlight/highlight.js", async: true }
+    { src: `${revealCDN}/plugin/markdown/marked.js` },
+    { src: `${revealCDN}/plugin/markdown/markdown.js` },
+    { src: `${revealCDN}/plugin/notes/notes.js`, async: true }
+    // { src: `${revealCDN}/plugin/highlight/highlight.js`, async: true }
   ],
   hash: true
 });

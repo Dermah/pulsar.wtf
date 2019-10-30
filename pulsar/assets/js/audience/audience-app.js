@@ -1,19 +1,9 @@
-// We need to import the CSS so that webpack will load it.
-// The MiniCssExtractPlugin is used to separate it out into
-// its own CSS file.
+// Import CSS so that webpack will load it
 import css from "../../css/audience-app.css";
 
-// webpack automatically bundles all modules in your
-// entry points. Those entry points can be configured
-// in "webpack.config.js".
-//
-// Import dependencies
-//
+// I don't know wgatrwhat this does anymore
 import "phoenix_html";
 
-// Import local files
-//
-// Local files can be imported directly using relative paths, for example:
 import { channel } from "./socket";
 
 import p5 from "p5";
@@ -292,7 +282,7 @@ new p5(p => {
     }
     p.textSize(12);
 
-    // Fireflys;
+    // Fireflies
     drawFirefly();
     drawInstruments();
 
@@ -312,7 +302,6 @@ new p5(p => {
     p.rectMode(p.CENTER);
     p.translate(-p.width / 2, 0);
 
-    // energyData.map((freqEnergy, i) => {
     const i = 0;
     const freqEnergy = energyData[instrument] || [];
     const channels = 1; //energyData.length
@@ -323,13 +312,10 @@ new p5(p => {
         (j * widthPc(100)) / freqEnergy.length +
           (1 * widthPc(100)) / (2 * freqEnergy.length),
         (i * heightPc(100)) / channels + (1 * heightPc(100)) / (2 * channels),
-        // 10,
-        // 10
         widthPc(100) / freqEnergy.length,
         (heightPc(50 / channels) * amp) / 255
       );
     });
-    // });
 
     drawBeams();
 
